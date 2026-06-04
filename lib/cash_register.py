@@ -3,7 +3,7 @@
 class CashRegister:
     def __init__(self, discount=0):
         self._discount = 0
-        self.discount = discount  # use setter validation
+        self.discount = discount
 
         self.total = 0
         self.items = []
@@ -20,7 +20,7 @@ class CashRegister:
         else:
             print("Not valid discount")
 
-    def add_item(self, item, price, quantity):
+    def add_item(self, item, price, quantity=1):
         self.total += price * quantity
 
         for _ in range(quantity):
@@ -33,7 +33,7 @@ class CashRegister:
         })
 
     def apply_discount(self):
-        if len(self.previous_transactions) == 0:
+        if self.discount == 0:
             print("There is no discount to apply.")
             return
 
@@ -50,10 +50,8 @@ class CashRegister:
         price = last_transaction["price"]
         quantity = last_transaction["quantity"]
 
-        # Remove the item's cost from total
         self.total -= price * quantity
 
-        # Remove items from items list
         for _ in range(quantity):
             if item in self.items:
                 self.items.remove(item)
